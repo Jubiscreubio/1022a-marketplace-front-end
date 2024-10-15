@@ -40,3 +40,16 @@
 .read-the-docs {
   color: #888;
 }
+
+
+.produto-item{
+  display: flex;
+}
+
+.produto-item>img{
+  width: 100%;
+
+}
+.produto-container{
+
+}
