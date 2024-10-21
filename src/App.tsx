@@ -39,6 +39,8 @@ function App() {
   return (
     <>
       <h1>{nome}</h1>
+
+      
       
       <div className="produtos-container">
         <h2>Lista de Produtos</h2>
@@ -74,6 +76,16 @@ function App() {
           })
         }
       </div>
+      
+      <div className="quadrado">
+        <h2>Registro</h2>
+        <p><strong>ID:</strong> 12345</p>
+        <p><strong>Nome:</strong> João da Silva</p>
+        <p><strong>Email:</strong> joao.silva@example.com</p>
+        <p><strong>Data de Criação:</strong> 2023-01-01</p>
+        <p><strong>Data de Atualização:</strong> 2024-10-20</p>
+    </div>
+      
     </>
   )
 }
