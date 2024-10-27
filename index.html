@@ -5,23 +5,10 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + React + TS</title>
+    
   </head>
   <body>
-    <div id="root">
-      <h1>Bem-vindo à Página Principal</h1>
-      <button id="loadUsuarios">Carregar Usuários</button>
-      <div id="usuarios-content"></div>
-    </div>
+    <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script>
-      document.getElementById('loadUsuarios').addEventListener('click', () => {
-        fetch('usuarios.html')
-          .then(response => response.text())
-          .then(data => {
-            document.getElementById('usuarios-content').innerHTML = data;
-          })
-          .catch(error => console.error('Erro ao carregar usuários:', error));
-      });
-    </script>
   </body>
 </html>

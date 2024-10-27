@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 
+
 type ProdutoType = {
   id: number,
   nome: string,
@@ -23,7 +24,7 @@ function App() {
   const [usuarios, setUsuarios] = useState<UsuarioType[]>([])
 
   useEffect(() => {
-    setNome("André")
+    setNome("Zezio")
 
     // Buscar os dados de produtos do Backend
     fetch("https://one022a-marketplace.onrender.com/produtos")
@@ -36,11 +37,13 @@ function App() {
       .then(dados => setUsuarios(dados))
   }, [])
 
+
+
   return (
     <>
-      <h1>{nome}</h1>
-
       
+
+      <h1>{nome}</h1>
       
       <div className="produtos-container">
         <h2>Lista de Produtos</h2>
@@ -61,6 +64,8 @@ function App() {
         }
       </div>
 
+   
+
       <div className="usuarios-container">
         <h2>Lista de Usuários</h2>
         {
@@ -76,17 +81,10 @@ function App() {
           })
         }
       </div>
+
       
-      <div className="quadrado">
-        <h2>Registro</h2>
-        <p><strong>ID:</strong> 12345</p>
-        <p><strong>Nome:</strong> João da Silva</p>
-        <p><strong>Email:</strong> joao.silva@example.com</p>
-        <p><strong>Data de Criação:</strong> 2023-01-01</p>
-        <p><strong>Data de Atualização:</strong> 2024-10-20</p>
-    </div>
-      
-    </>
+
+</>
   )
 }
 
