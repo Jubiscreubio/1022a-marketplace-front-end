@@ -1,113 +1,79 @@
-import { useEffect, useState } from 'react'
-
-import './App.css'
-
+import { useEffect, useState } from 'react';
+import './App.css';
 
 type ProdutoType = {
-  id: number,
-  name: string,
-  preco: string,
-  descricao: string,
-  imagem: string
-}
-
-type UsuarioType = {
-  id: number,
-  name: string,
-  email: string,
-  created_at:string,
-  updated_at:string,
-}
-
-function App() {
-  const [nome,setNome] = useState("")
-  const [produtos, setProdutos] = useState<ProdutoType[]>([])
-  const [usuarios, setUsuarios] = useState<UsuarioType[]>([])
-
-
-  useEffect(() => {
-    setNome("Zezio")
-
-    // Buscar os dados de produtos do Backend
-    fetch("https://one022a-marketplace.onrender.com/produtos")
-      .then(resposta => resposta.json())
-      .then(dados => setProdutos(dados))
-
-    // Buscar os dados de usuários do Backend
-    fetch("https://one022a-marketplace.onrender.com/usuarios")
-      .then(resposta => resposta.json())
-      .then(dados => setUsuarios(dados))
-  }, [])
-
-
-  const addUser = () => {
-    const newUser: UsuarioType = {
-        id: 1,
-        name: `Usuário ${1}`,
-        email: `usuario${1}@email.com`,
-        created_at: new Date().toLocaleDateString(),
-        updated_at: new Date().toLocaleDateString(),
-    };
-
-    setUsuarios([...usuarios, newUser]);
-   
+  id: number;
+  nome: string;
+  preco: string;
+  descricao: string;
+  imagem: string;
 };
 
+type UsuarioType = {
+  id: number;
+  name: string;
+  email: string;
+  created_at: string;
+  updated_at: string;
+};
 
-    return (
+function App() {
+  const [produtos, setProdutos] = useState<ProdutoType[]>([]);
+  const [usuarios, setUsuarios] = useState<UsuarioType[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const produtosResponse = await fetch("https://one022a-marketplace.onrender.com/produtos");
+        const produtosData = await produtosResponse.json();
+        setProdutos(produtosData);
+
+        const usuariosResponse = await fetch("https://one022a-marketplace.onrender.com/usuarios");
+        const usuariosData = await usuariosResponse.json();
+        setUsuarios(usuariosData);
+      } catch (error) {
+        console.error("Erro ao buscar dados:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return (
     <>
-    
-
-
-      
-      <div className="produtos-container">
-        <h2>Lista de Produtos</h2>
-        {
-          produtos.map(produto => {
-            return (
-              <div key={produto.id} className="produto-item">
-                <h1>{produto.name}</h1>
-                <div className='container-imagem'>
-                  <img src={produto.imagem} alt={produto.name} />
-                </div>
-                <p>{produto.preco}</p>
-                <p>{produto.descricao}</p>
-                
-              </div>
-            )
-          })
-        }
-      </div>
-
    
-      <div>
-            <h2>Cadastro de Usuários</h2>
-            <button onClick={addUser}>Adicionar Usuário</button>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>NOME</th>
-                        <th>EMAIL</th>
-                        <th>Data de Criação</th>
-                        <th>Data de Atualização</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {usuarios.map(user => (
-                        <tr key={user.id}>
-                            <td>{user.id}</td>
-                            <td>{user.name}</td>
-                            <td>{user.email}</td>
-                            <td>{user.created_at}</td>
-                            <td>{user.updated_at}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+      <section className="produtos-container">
+        <h1 className='titulo-produto'>Produtos</h1>
+        <div className="produtos-list">
+          {produtos.map(produto => (
+            <div key={produto.id} className="produto-item">
+              <h3 className="produto-nome">{produto.nome}</h3>
+              <div className='container-imagem'>
+                <img src={produto.imagem} alt={`Imagem de ${produto.nome}`} />
+              </div>
+              <p className="produto-preco">{produto.preco}</p>
+              <p className="produto-descricao">{produto.descricao}</p>
+              <button className="botao-comprar">Comprar</button>
+            </div>
+          ))}
         </div>
-</>
-  )
+      </section>
+
+      <section className="usuarios-container">
+        <h1 className='titulo-usuario'>Usuários</h1>
+        <div className="usuarios-list">
+          {usuarios.map(usuario => (
+            <div key={usuario.id} className="usuario-item">
+              <h2 className="usuario-nome">{usuario.name}</h2>
+              <p>Email: {usuario.email}</p>
+              <p>Criado em: {new Date(usuario.created_at).toLocaleDateString()}</p>
+              <p>Atualizado em: {new Date(usuario.updated_at).toLocaleDateString()}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    </>
+  );
 }
 
-export default App
+export default App;
