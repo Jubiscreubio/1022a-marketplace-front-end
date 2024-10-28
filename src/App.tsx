@@ -23,12 +23,12 @@ function App() {
   const [usuarios, setUsuarios] = useState<UsuarioType []>([])
   //useEffects(O que fazer, quando Fazer) []=> Hora do carregamento da página
   useEffect(() => {
-    setNome("Guilherme Terenciani")
+    setNome("Amir, André, Paulo André e Vinicius Azevedo")
     //Buscar os dados do BackENd
     fetch("https://one022a-marketplace.onrender.com/produtos")
       .then(resposta => resposta.json())
       .then(dados => setProdutos(dados))
-      fetch("https://one022a-marketplace.onrender.com/produtos")
+      fetch("https://one022a-marketplace.onrender.com/usuarios")
       .then(resposta => resposta.json())
       .then(dados => setUsuarios(dados))
     //Colocar em uma variável
@@ -56,12 +56,12 @@ function App() {
       </div>
 
 
-
+    <h1>Lista Usuarios</h1>
       <div className="usuarios-container">
             {
                 usuarios.map(usuario => {
                     return (
-                        <div key={usuario.id} className="usuario-item">
+                        <div key={usuario.id} className="usuarios-item">
                             <h1>{usuario.nome}</h1>
                             <p>Id: {usuario.id}</p>
                             <p>Nome: {usuario.nome}</p>

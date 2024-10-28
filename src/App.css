@@ -1,8 +1,20 @@
-.produtos-list {
+body {
+  background-color: #f9f9f9; /* Cor de fundo da página */
+  display: flex;
+  flex-direction: column; /* Coloca os elementos em coluna */
+  justify-content: center; /* Centraliza verticalmente */
+  align-items: center; /* Centraliza horizontalmente */
+  height: 100vh; /* Ocupa a altura total da tela */
+  margin: 0; /* Remove margens padrão */
+}
+
+.produtos-container,
+.usuarios-container {
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
   justify-content: center; /* Centraliza os itens horizontalmente */
+  padding: 20px; /* Adiciona um espaçamento interno ao contêiner */
 }
 
 .titulo-produto {
@@ -23,7 +35,7 @@
   transition: transform 0.2s;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;    
 }
 
 .produto-item:hover {
@@ -74,20 +86,46 @@
 }
 
 .botao-comprar:hover {
-  background-color:darkslategrey;
+  background-color: darkslategrey;
+}
+
+.usuarios-container {
+  width: 300px; /* Define uma largura fixa para os itens */
+  padding: 20px; /* Espaçamento interno */
+  border: 1px solid #ddd; /* Borda */
+  border-radius: 8px; /* Cantos arredondados */
+  background-color: #fff; /* Cor de fundo */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+  text-align: left; /* Alinhamento do texto */
+  transition: transform 0.2s; /* Efeito de transição ao passar o mouse */
+}
+
+.usuarios-item:hover {
+  transform: scale(1.05); /* Aumenta levemente o tamanho ao passar o mouse */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra mais intensa ao passar o mouse */
+}
+
+.usuarios-item h1 {
+  font-size: 1.5em; /* Tamanho do título */
+  margin-bottom: 0.5rem; /* Espaço abaixo do título */
+  color: #333; /* Cor do texto */
+}
+
+.usuarios-item p {
+  margin: 0.3rem 0; /* Margem entre os parágrafos */
+  color: #666; /* Cor do texto */
 }
 
 @media (max-width: 1024px) {
   .produto-item,
-  .usuario-item {
+  .usuarios-item {
     width: calc(50% - 1rem);
   }
 }
 
 @media (max-width: 768px) {
   .produto-item,
-  .usuario-item {
+  .usuarios-item {
     width: calc(100% - 1rem);
   }
 }
- 
