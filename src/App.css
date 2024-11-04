@@ -1,25 +1,129 @@
-body {
-  background-color: #f9f9f9; /* Cor de fundo da página */
-  display: flex;
-  flex-direction: column; /* Coloca os elementos em coluna */
-  justify-content: center; /* Centraliza verticalmente */
-  align-items: center; /* Centraliza horizontalmente */
-  height: 100vh; /* Ocupa a altura total da tela */
-  margin: 0; /* Remove margens padrão */
+
+
+#root {
+  margin: 0px;
+  padding: 0px;
 }
 
-.produtos-container,
-.usuarios-container {
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background-color: #333;
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 0;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  box-sizing: border-box;
+}
+
+.logo img {
+  height: 40px;
+  transition: transform 0.3s;
+}
+
+.logo img:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.navigation ul {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navigation a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+.navigation a:hover {
+  color: #ff6600;
+}
+
+.header-actions .login-button {
+  padding: 0.8rem;
+  background-color: #ff6600;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header-actions .login-button:hover {
+  background-color: #e65c00;
+}
+
+@media (max-width: 768px) {
+  .site-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navigation ul {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .navigation li {
+    padding: 0.5rem 0;
+  }
+
+  .header-actions .login-button {
+    width: 100%;
+    margin-top: 1rem;
+  }
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.produtos-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.produtos-list {
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
-  justify-content: center; /* Centraliza os itens horizontalmente */
-  padding: 20px; /* Adiciona um espaçamento interno ao contêiner */
 }
 
 .titulo-produto {
   font-size: 60px;
-  color: #333;  
+  color: #333;
   margin-bottom: 1rem;
   text-align: center;
 }
@@ -31,11 +135,11 @@ body {
   border-radius: 8px;
   background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  text-align: left;
   transition: transform 0.2s;
   display: flex;
   flex-direction: column;
-  justify-content: center;    
+  justify-content: space-between;
 }
 
 .produto-item:hover {
@@ -62,6 +166,7 @@ body {
 .produto-preco {
   font-size: 1.1em;
   font-weight: bold;
+  color: #007b00;
   margin: 0.5rem 0;
 }
 
@@ -75,7 +180,7 @@ body {
   margin-top: auto;
   width: 100%;
   padding: 0.8rem;
-  background-color: #333;
+  background-color: #ff6600;
   color: #fff;
   font-weight: bold;
   border: none;
@@ -86,46 +191,80 @@ body {
 }
 
 .botao-comprar:hover {
-  background-color: darkslategrey;
+  background-color: #be3c00;
 }
 
 .usuarios-container {
-  width: 300px; /* Define uma largura fixa para os itens */
-  padding: 20px; /* Espaçamento interno */
-  border: 1px solid #ddd; /* Borda */
-  border-radius: 8px; /* Cantos arredondados */
-  background-color: #fff; /* Cor de fundo */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
-  text-align: left; /* Alinhamento do texto */
-  transition: transform 0.2s; /* Efeito de transição ao passar o mouse */
+  padding: 1rem;
+  text-align: center;
 }
 
-.usuarios-item:hover {
-  transform: scale(1.05); /* Aumenta levemente o tamanho ao passar o mouse */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra mais intensa ao passar o mouse */
+.titulo-usuario {
+  font-size: 60px;
+  color: #333;
+  margin-bottom: 1rem;
+  text-align: center;
+  margin-bottom: 30px;
 }
 
-.usuarios-item h1 {
-  font-size: 1.5em; /* Tamanho do título */
-  margin-bottom: 0.5rem; /* Espaço abaixo do título */
-  color: #333; /* Cor do texto */
+.usuarios-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
 }
 
-.usuarios-item p {
-  margin: 0.3rem 0; /* Margem entre os parágrafos */
-  color: #666; /* Cor do texto */
+.usuario-item {
+  width: calc(33.33% - 1rem);
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  transition: transform 0.2s;
+}
+
+.usuario-item:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.usuario-nome {
+  font-size: 1.2em;
+  margin: 0.5rem 0;
+  color: #333;
 }
 
 @media (max-width: 1024px) {
   .produto-item,
-  .usuarios-item {
+  .usuario-item {
     width: calc(50% - 1rem);
   }
 }
 
 @media (max-width: 768px) {
   .produto-item,
-  .usuarios-item {
-    width: calc(100% - 1rem);
+  .usuario-item {
+    width: calc(100% - 1rem);}
   }
+
+
+.produtos-container{
+  display: flex;
+  gap: 20px;
+}
+.produto-item{
+  width: 300px;
+  border: 1px solid #f0f0f0;
+  padding: 15px 20px;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 12px 2px rgb(195, 195, 195);
+}
+.container-imagem{
+  height: 300px;
+  overflow: hidden;
+}
+.produto-item>.container-imagem>img{
+  width: 100%;
 }
