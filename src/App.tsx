@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 
+
 // Tipo para produtos
 type ProdutoType = {
   id: number;
@@ -56,8 +57,28 @@ function App() {
           </ul>
         </nav>
 
-        <div className="header-actions">
-          <button className="login-button">Login</button>
+          <div className="header-actions">
+          <header className="site-header">
+  <nav className="navigation">
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#produtos">Livros</a></li>
+      <li><a href="#usuarios">Usuários</a></li>
+    </ul>
+  </nav>
+
+  <div className="header-actions">
+    <button
+      className="login-button"
+      onClick={() => {
+        window.location.href = "/login.html"; // Caminho para o documento login.html
+      }}
+    >
+      Login
+    </button>
+  </div>
+</header>
+
         </div>
       </header>
 
