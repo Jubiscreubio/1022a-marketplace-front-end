@@ -1,5 +1,6 @@
 import {  ChangeEvent, FormEvent, useState } from "react"
 import { useNavigate } from 'react-router-dom';
+import './CadastroProduto.css'
 function CadastroProduto(){
     const navigate = useNavigate()
     const [id,setId] = useState("")
@@ -32,9 +33,17 @@ function CadastroProduto(){
                 alert("Erro ao Cadastrar Produto - Error: "+mensagem)
             }
         }
-        catch(e){
-            alert("Servidor não está respondendo.")
-        }
+            // código que pode lançar uma exceção
+         catch (e) {
+            if (e instanceof Error) {
+              // Se for um erro do tipo Error, exibe a mensagem de erro padrão
+              alert("Erro no servidor: " + e.message);
+            } else {
+              // Se não for um erro do tipo Error, exibe uma mensagem genérica
+              alert("Servidor não está respondendo.");
+            }
+          }
+          
         
     }
     function handleId(event:ChangeEvent<HTMLInputElement>){
@@ -53,8 +62,8 @@ function CadastroProduto(){
         setImagem(event.target.value)
     }
     return(
+        
         <>
-            <h1>Meu Componente de Cadastro de Produtos</h1>
             <form onSubmit={handleForm}>
                 <div>
                     <input placeholder="Id" type="text" name="id" id="id" onChange={handleId} />

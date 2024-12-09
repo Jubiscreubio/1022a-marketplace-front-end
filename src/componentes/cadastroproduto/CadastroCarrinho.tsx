@@ -1,12 +1,19 @@
 import { ChangeEvent, FormEvent, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import './CadastroCarrinho.css'
+
+// Define o tipo para o produto no carrinho
+interface ProdutoCarrinho {
+  produtoId: string;
+  quantidade: string;
+}
 
 function CadastroCarrinho() {
   const navigate = useNavigate();
-  const [usuarioId, setUsuarioId] = useState("");
+
   const [produtoId, setProdutoId] = useState("");
   const [quantidade, setQuantidade] = useState("");
-  const [carrinho, setCarrinho] = useState<any[]>([]);
+  const [carrinho, setCarrinho] = useState<ProdutoCarrinho[]>([]); // Tipando o carrinho
 
   // Carregar carrinho do localStorage ao carregar o componente
   useEffect(() => {
@@ -24,7 +31,6 @@ function CadastroCarrinho() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          usuario_id: usuarioId,
           produto_id: produtoId,
           quantidade: quantidade,
         }),
@@ -42,25 +48,15 @@ function CadastroCarrinho() {
         alert("Erro ao adicionar produto ao carrinho - Erro: " + mensagem);
       }
     } catch (e) {
-      alert("Servidor não está respondendo.");
+      if (e instanceof Error) {
+        alert("Erro no servidor: " + e.message);
+      } else {
+        alert("Servidor não está respondendo.");
+      }
     }
   }
 
-  // Função para remover produto do carrinho
-  function removerDoCarrinho(produtoId: string) {
-    const carrinhoAtualizado = carrinho.filter(
-      (produto) => produto.produtoId !== produtoId
-    );
-    localStorage.setItem("carrinho", JSON.stringify(carrinhoAtualizado));
-    setCarrinho(carrinhoAtualizado);
-    alert("Produto removido do carrinho.");
-  }
-
   // Funções para manipular os inputs do formulário
-  function handleUsuarioId(event: ChangeEvent<HTMLInputElement>) {
-    setUsuarioId(event.target.value);
-  }
-
   function handleProdutoId(event: ChangeEvent<HTMLInputElement>) {
     setProdutoId(event.target.value);
   }
@@ -71,17 +67,7 @@ function CadastroCarrinho() {
 
   return (
     <>
-      <h1>Cadastro de Item no Carrinho</h1>
       <form onSubmit={handleForm}>
-        <div>
-          <input
-            placeholder="ID do Usuário"
-            type="text"
-            name="usuarioId"
-            id="usuarioId"
-            onChange={handleUsuarioId}
-          />
-        </div>
         <div>
           <input
             placeholder="ID do Produto"
@@ -103,23 +89,7 @@ function CadastroCarrinho() {
         <input type="submit" value="Adicionar ao Carrinho" />
       </form>
 
-      <h2>Carrinho de Compras</h2>
-      {carrinho.length === 0 ? (
-        <p>Seu carrinho está vazio.</p>
-      ) : (
-        <div>
-          {carrinho.map((produto, index) => (
-            <div key={index} style={{ marginBottom: "20px" }}>
-              <h3>Produto ID: {produto.produtoId}</h3>
-              <p>Quantidade: {produto.quantidade}</p>
-              <button onClick={() => removerDoCarrinho(produto.produtoId)}>
-                Remover do Carrinho
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
-    </>
+</>
   );
 }
 
