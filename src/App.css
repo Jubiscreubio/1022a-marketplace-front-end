@@ -204,3 +204,72 @@ body {
 
 
 
+ /* Estilos gerais para o formulário */
+form {
+  width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+/* Estilos para cada categoria */
+.categoria-sopro {
+  background-color: #ffcc00; /* Cor amarela para Sopro */
+  color: #333;
+  border: 2px solid #ff9900;
+}
+
+.categoria-corda {
+  background-color: #0099cc; /* Cor azul para Corda */
+  color: white;
+  border: 2px solid #006699;
+}
+
+.categoria-percussao {
+  background-color: #ff4d4d; /* Cor vermelha para Percussão */
+  color: white;
+  border: 2px solid #b30000;
+}
+
+/* Estilos para o campo select */
+select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+/* Estilos para o botão de envio */
+input[type="submit"] {
+  background-color: #4CAF50; /* Cor verde */
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+input[type="submit"]:hover {
+  background-color: #45a049; /* Tom mais escuro quando passa o mouse */
+}
+
+/* Estilos para os inputs de texto */
+input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+
+
+
+
+
+
+

@@ -144,6 +144,33 @@ function ProdutosCadastrados() {
       <div>
         <button onClick={() => navigate("/cadastro-carrinho")}>Ver Carrinho ({carrinho.length})</button>
       </div>
+
+      <div className="categorias">
+                {/* Divisões para as categorias */}
+                <div className="categoria categoria-sopro">
+                    <h3>Sopro</h3>
+                    
+                    <ul>
+                        {/* Aqui você pode mapear os produtos que pertencem à categoria Sopro */}
+                    </ul>
+                </div>
+
+                <div className="categoria categoria-corda">
+                    <h3>Corda</h3>
+                 
+                    <ul>
+                        {/* Aqui você pode mapear os produtos que pertencem à categoria Corda */}
+                    </ul>
+                </div>
+
+                <div className="categoria categoria-percussao">
+                    <h3>Percussão</h3>
+               
+                    <ul>
+                        {/* Aqui você pode mapear os produtos que pertencem à categoria Percussão */}
+                    </ul>
+                </div>
+            </div>
     </>
   );
 }
