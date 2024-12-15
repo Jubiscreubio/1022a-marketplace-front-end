@@ -10,6 +10,7 @@ type ProdutoType = {
   nome: string,
   preco: string,
   descricao: string,
+  categoria: string,
   imagem: string
 }
 
