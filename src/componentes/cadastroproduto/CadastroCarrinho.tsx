@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { Link } from "react-router-dom";
+import './CadastroCarrinho.css'
 
 // Definindo o tipo do produto
 interface Produto {
@@ -23,12 +25,15 @@ function CadastroCarrinho() {
   const [carrinho, setCarrinho] = useState<ProdutoCarrinho[]>([]); // Carrinho de compras
   const [mensagem, setMensagem] = useState<string>(""); // Mensagem de sucesso ou erro
 
+  // Referência para a seção do carrinho
+  const carrinhoRef = useRef<HTMLDivElement>(null);
+
   // Carregar os produtos cadastrados do servidor
   useEffect(() => {
     async function fetchProdutos() {
       try {
         const resposta = await fetch("http://localhost:8000/produtos");
-        
+
         if (resposta.ok) {
           const dados = await resposta.json();
           setProdutos(dados);
@@ -70,15 +75,15 @@ function CadastroCarrinho() {
       );
       setCarrinho(novoCarrinho);
       localStorage.setItem("carrinho", JSON.stringify(novoCarrinho));
-      setMensagem(`Produto "${produto.nome}" adicionado ao carrinho!`); // Mensagem de sucesso
-      window.alert(`Produto "${produto.nome}" adicionado ao carrinho!`); // Exibe a mensagem no pop-up
+      setMensagem(`Produto "${produto.nome}" adicionado ao carrinho!`);
+      window.alert(`Produto "${produto.nome}" adicionado ao carrinho!`);
     } else {
       // Caso contrário, adicionar o novo produto
       const novoCarrinho = [...carrinhoExistente, produtoCarrinho];
       setCarrinho(novoCarrinho);
       localStorage.setItem("carrinho", JSON.stringify(novoCarrinho));
-      setMensagem(`Produto "${produto.nome}" adicionado ao carrinho!`); // Mensagem de sucesso
-      window.alert(`Produto "${produto.nome}" adicionado ao carrinho!`); // Exibe a mensagem no pop-up
+      setMensagem(`Produto "${produto.nome}" adicionado ao carrinho!`);
+      window.alert(`Produto "${produto.nome}" adicionado ao carrinho!`);
     }
 
     // Limpar a mensagem após 3 segundos
@@ -93,8 +98,8 @@ function CadastroCarrinho() {
     localStorage.setItem("carrinho", JSON.stringify(novoCarrinho));
 
     if (produtoRemovido) {
-      setMensagem(`Produto "${produtoRemovido.nome}" removido do carrinho!`); // Mensagem de remoção
-      window.alert(`Produto "${produtoRemovido.nome}" removido do carrinho!`); // Exibe a mensagem no pop-up
+      setMensagem(`Produto "${produtoRemovido.nome}" removido do carrinho!`);
+      window.alert(`Produto "${produtoRemovido.nome}" removido do carrinho!`);
     }
 
     // Limpar a mensagem após 3 segundos
@@ -123,68 +128,79 @@ function CadastroCarrinho() {
 
   return (
     <div>
-      <h1>Cadastro de Produtos no Carrinho</h1>
+      {/* Cabeçalho */}
+      <header className="site-header">
+        <nav className="navigation">
+          <ul>
+            <li><Link to="#home">Home</Link></li>
+            <li><Link to="#produtos">Produtos</Link></li>
+            <li><Link to="/cadastro-produto">Cadastro de Produto</Link></li>
+            <li><Link to="/cadastro-carrinho">Carrinho</Link></li>
+            
+          </ul>
+        </nav>
 
-      {/* Exibição da mensagem de sucesso ou erro */}
-      {mensagem && <div style={{ color: "green", fontWeight: "bold" }}>{mensagem}</div>}
-
-      <div>
-        <h2>Produtos Disponíveis</h2>
-        <div style={{ display: "flex", flexWrap: "wrap" }}>
-          {produtos.map((produto) => (
-            <div
-              key={produto.id}
-              style={{
-                border: "1px solid #ccc",
-                margin: "10px",
-                padding: "10px",
-                width: "200px",
-              }}
-            >
-              <img
-                src={produto.imagem}
-                alt={produto.nome}
-                style={{ width: "100px", height: "100px", objectFit: "cover" }}
-              />
-              <h3>{produto.nome}</h3>
-              <p>{produto.descricao}</p>
-              <p>Preço: R${produto.preco}</p>
-              <button onClick={() => adicionarAoCarrinho(produto)}>Adicionar ao Carrinho</button>
-            </div>
-          ))}
+        <div className="header-actions">
+          <button className="login-button">Login</button>
         </div>
-      </div>
+      </header>
 
-      <h2>Carrinho de Compras</h2>
-      {carrinho.length === 0 ? (
-        <p>Seu carrinho está vazio.</p>
-      ) : (
+      {/* Corpo da página */}
+      <div style={{ paddingTop: "80px" }}>
+        {/* Exibição da mensagem de sucesso ou erro */}
+        {mensagem && <div className="mensagem">{mensagem}</div>}
+
         <div>
-          {carrinho.map((produto) => (
-            <div
-              key={produto.id}
-              style={{
-                border: "1px solid #ccc",
-                margin: "10px",
-                padding: "10px",
-                width: "200px",
-              }}
-            >
-              <img
-                src={produto.imagem}
-                alt={produto.nome}
-                style={{ width: "100px", height: "100px", objectFit: "cover" }}
-              />
-              <h3>{produto.nome}</h3>
-              <p>Preço: R${produto.preco}</p>
-              <p>Quantidade: {produto.quantidade}</p>
-              <button onClick={() => diminuirQuantidade(produto.id)}>-</button>
-              <button onClick={() => aumentarQuantidade(produto.id)}>+</button>
-              <button onClick={() => removerProdutoDoCarrinho(produto.id)}>Remover</button>
-            </div>
-          ))}
+          <h2>Produtos Disponíveis</h2>
+          <div className="produtos-lista">
+            {produtos.map((produto) => (
+              <div key={produto.id} className="produto-card">
+                <img
+                  src={produto.imagem}
+                  alt={produto.nome}
+                  className="produto-imagem"
+                />
+                <h3>{produto.nome}</h3>
+                <p>{produto.descricao}</p>
+                <p>Preço: R${produto.preco}</p>
+                <button onClick={() => adicionarAoCarrinho(produto)}>Adicionar ao Carrinho</button>
+              </div>
+            ))}
+          </div>
         </div>
-      )}
+
+        {/* Exibição do Carrinho */}
+        <h2 ref={carrinhoRef}>Carrinho de Compras</h2>
+        {carrinho.length === 0 ? (
+          <p className="carrinho-vazio">Seu carrinho está vazio.</p>
+        ) : (
+          <div className="carrinho-lista">
+            {carrinho.map((produto) => (
+              <div key={produto.id} className="carrinho-item">
+                <img
+                  src={produto.imagem}
+                  alt={produto.nome}
+                  className="produto-imagem"
+                />
+                <h3>{produto.nome}</h3>
+                <p>Preço: R${produto.preco}</p>
+                <p>Quantidade: {produto.quantidade}</p>
+
+                {/* Botões de aumentar e diminuir quantidade */}
+                <div className="btn-container">
+                  <button onClick={() => diminuirQuantidade(produto.id)}>-</button>
+                  <button onClick={() => aumentarQuantidade(produto.id)}>+</button>
+                </div>
+
+                {/* Botão de remover */}
+                <div className="remover-btn">
+                  <button onClick={() => removerProdutoDoCarrinho(produto.id)}>Remover</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
