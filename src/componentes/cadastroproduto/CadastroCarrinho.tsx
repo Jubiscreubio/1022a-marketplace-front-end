@@ -132,10 +132,10 @@ function CadastroCarrinho() {
       <header className="site-header">
         <nav className="navigation">
           <ul>
-            <li><Link to="#home">Home</Link></li>
+            <li><Link to="/">Home</Link></li>
             <li><Link to="#produtos">Produtos</Link></li>
             <li><Link to="/cadastro-produto">Cadastro de Produto</Link></li>
-            <li><Link to="/cadastro-carrinho">Carrinho</Link></li>
+
             
           </ul>
         </nav>

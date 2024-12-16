@@ -102,10 +102,9 @@ function ProdutosCadastrados() {
       <header className="site-header">
         <nav className="navigation">
           <ul>
-            <li><a href="#home">Home</a></li>
+            <li><a href="/">Home</a></li>
             <li><a href="#produtos">Produtos</a></li>
             <Link to="/cadastro-produto">Cadastro de Produto</Link>
-            <li><a href="/cadastro-carrinho">Carrinho</a></li>
             
           </ul>
         </nav>
