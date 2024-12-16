@@ -1,75 +1,274 @@
 /* Reset básico */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-  }
-  
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100vw; /* Ocupa a largura total da tela */
+  padding: 1rem 2rem;
+  height: 60px;
+  background-color: #2f2f2f;
+  color: #fff;
+  position: fixed; /* Fixa no topo da tela */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Fica acima de outros elementos */
+}
+
+/* Estilo do Body */
+body {
+  background-color: #0e1621;
+  color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.6;
+  padding: 2rem;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+
+
+h2 {
+  font-size: 1.6rem;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Estilo da Mensagem de Sucesso ou Erro */
+.mensagem {
+  color: #6e6e6e;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Estilo dos Cards de Produtos */
+.produtos-lista {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 20px;
+  margin-bottom: 2rem;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.produto-card {
+  background-color: #2f2f2f;
+  border: 1px solid #33527d;
+  border-radius: 2px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 240px;
+  height: 380px; /* Ajusta a altura do card */
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.produto-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgb(123, 0, 255);
+}
+
+.produto-card img {
+  width: 100%;
+  height: 160px; /* Garante que as imagens não fiquem cortadas */
+  object-fit: contain; /* Garante que a imagem será visível completamente */
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.produto-card h3 {
+  font-size: 1.3rem;
+  color: #ffffff;
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+}
+
+.produto-card p {
+  font-size: 1rem;
+  color: #898989;
+  margin-bottom: 1rem;
+}
+
+.produto-card button {
+  padding: 0.6rem 1.2rem;  /* Tamanho reduzido dos botões */
+  font-size: 0.95rem;
+  color: #ffffff;
+  background-color: #4050ff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px; /* Espaço entre o botão e o conteúdo acima */
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease;
+}
+
+.produto-card button:hover {
+  background-color: #2733b6;
+  transform: translateY(-3px);
+}
+
+/* Estilo para a área do Carrinho */
+.carrinho {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 20px;
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.carrinho-lista {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 20px;
+  margin-bottom: 2rem;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.carrinho-item {
+  background-color: #2f2f2f;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 240px;
+  height: 470px; /* Ajusta a altura do card */
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.carrinho-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(123, 0, 255);
+}
+
+.carrinho-item img {
+  width: 100%;
+  height: 160px; /* Garante que as imagens não fiquem cortadas */
+  object-fit: contain; /* Garante que a imagem será visível completamente */
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.carrinho-item h3 {
+  font-size: 1.3rem;
+  color: #ffffff;
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+}
+
+.carrinho-item p {
+  font-size: 1rem;
+  color: #898989;
+  margin-bottom: 1rem;
+}
+
+.carrinho-item button {
+  padding: 0.6rem 1.2rem; /* Tamanho reduzido dos botões */
+  font-size: 0.95rem;
+  color: #ffffff;
+  background-color: #4050ff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px; /* Espaço entre o botão e o conteúdo acima */
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease;
+}
+
+.carrinho-item button:hover {
+  background-color: #2733b6;
+  transform: translateY(-3px);
+}
+
+/* Estilo para Carrinho Vazio */
+.carrinho-vazio {
+  text-align: center;
+  font-size: 1.4rem;
+  color: #888;
+  margin-top: 2rem;
+}
+
+/* Botões + e - (para aumentar e diminuir quantidade) */
+.btn-container {
+  display: flex;
+  justify-content:center;
+  gap: 13px; /* Espaçamento entre os botões */
+  margin-bottom: 1px; /* Espaço entre os botões e o botão Remover */
+}
+
+.btn-container button {
+  padding: 0.4rem 0.8rem; /* Botões menores */
+  font-size: 1.2rem;
+  width: 40px; /* Ajustando o tamanho dos botões */
+  height: 40px;
+}
+
+.remover-btn {
+  margin-top: 10px; /* Deixa o botão "Remover" um pouco mais para cima */
+  display: flex;
+  justify-content: center;
+}
+
+.remover-btn button {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  background-color: #4050ff;
+  color: #fff;
+  border-radius: 6px;
+  width: 100%;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease;
+}
+
+.remover-btn button:hover {
+  background-color: #2733b6;
+  transform: translateY(-3px);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
   body {
-    background-color: #f4f4f4;
-    color: #333;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    line-height: 1.6;
+    padding: 1rem;
   }
-  
-  /* Estilo do Formulário */
-  form {
-    background-color: #fff;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 600px;
-    margin: 2rem auto;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+
+  h1 {
+    font-size: 2rem;
   }
-  
-  form div {
-    display: flex;
-    flex-direction: column;
+
+  h2 {
+    font-size: 1.4rem;
   }
-  
-  form input[type="text"] {
-    padding: 0.8rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+  .produto-card, .carrinho-item {
+    width: 100%;
+    max-width: 300px; /* Limita o tamanho dos cards em telas pequenas */
+    height: auto;
   }
-  
-  form input[type="text"]:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
-    outline: none;
+
+  .produtos-lista, .carrinho {
+    justify-content: center;
   }
-  
-  form input[type="submit"] {
-    padding: 0.8rem;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out, transform 0.2s;
-  }
-  
-  form input[type="submit"]:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
-  }
-  
-  /* Responsividade */
-  @media (max-width: 768px) {
-    form {
-      width: calc(100% - 2rem);
-    }
-  }
-  
+}
