@@ -103,7 +103,6 @@ function ProdutosCadastrados() {
         <nav className="navigation">
           <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="#produtos">Produtos</a></li>
             <Link to="/cadastro-produto">Cadastro de Produto</Link>
             
           </ul>

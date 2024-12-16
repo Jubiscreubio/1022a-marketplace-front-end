@@ -133,7 +133,6 @@ function CadastroCarrinho() {
         <nav className="navigation">
           <ul>
             <li><Link to="/">Home</Link></li>
-            <li><Link to="#produtos">Produtos</Link></li>
             <li><Link to="/cadastro-produto">Cadastro de Produto</Link></li>
 
             
