@@ -45,6 +45,8 @@ h2 {
   text-align: center;
 }
 
+
+
 /* Estilo da Mensagem de Sucesso ou Erro */
 .mensagem {
   color: #6e6e6e;
@@ -70,7 +72,7 @@ h2 {
   border-radius: 2px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 240px;
-  height: 380px; /* Ajusta a altura do card */
+  min-height: 380px; /* Altura mínima */
   padding: 1rem;
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -78,7 +80,7 @@ h2 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  overflow: hidden;
+  overflow: visible; /* Permite que o conteúdo seja exibido */
 }
 
 .produto-card:hover {
@@ -88,8 +90,9 @@ h2 {
 
 .produto-card img {
   width: 100%;
-  height: 160px; /* Garante que as imagens não fiquem cortadas */
-  object-fit: contain; /* Garante que a imagem será visível completamente */
+  height: auto; /* Ajusta a altura automaticamente */
+  max-height: 160px; /* Limita a altura máxima da imagem */
+  object-fit: contain;
   border-radius: 8px;
   margin-bottom: 1rem;
 }
@@ -103,19 +106,34 @@ h2 {
 
 .produto-card p {
   font-size: 1rem;
-  color: #898989;
+  color: #f3f3f3;
   margin-bottom: 1rem;
+  overflow-y: auto; /* Permite rolagem vertical */
+  max-height: 4rem; /* Limita a altura máxima da descrição */
+  padding-right: 8px; /* Adiciona espaço para a barra de rolagem */
+  position: relative;
+
+  /* Estilo da máscara ondulada */
+  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 15%, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0) 100%);
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 15%, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0) 100%);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  scrollbar-width: thin; /* Para navegadores que suportam */
+  scrollbar-color: #6e6e6e transparent;
 }
 
 .produto-card button {
-  padding: 0.6rem 1.2rem;  /* Tamanho reduzido dos botões */
+  padding: 0.6rem 1.2rem;
   font-size: 0.95rem;
   color: #ffffff;
   background-color: #4050ff;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  margin-top: 10px; /* Espaço entre o botão e o conteúdo acima */
+  margin-top: 10px;
   transition: background-color 0.3s ease-in-out, transform 0.3s ease;
 }
 
@@ -150,15 +168,16 @@ h2 {
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 240px;
-  height: 470px; /* Ajusta a altura do card */
+  min-height: 470px; /* Altura mínima */
+  max-height: 470px; /* Limita a altura máxima */
   padding: 1rem;
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
-  display:flex;
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
-  overflow: hidden;
+  overflow: hidden; /* Garante que o conteúdo não ultrapasse */
 }
 
 .carrinho-item:hover {
@@ -168,34 +187,41 @@ h2 {
 
 .carrinho-item img {
   width: 100%;
-  height: 160px; /* Garante que as imagens não fiquem cortadas */
-  object-fit: contain; /* Garante que a imagem será visível completamente */
+  height: auto; /* Ajusta a altura automaticamente */
+  max-height: 160px; /* Limita a altura máxima da imagem */
+  object-fit: contain;
   border-radius: 8px;
   margin-bottom: 1rem;
 }
 
 .carrinho-item h3 {
-  font-size: 1.3rem;
+  font-size: 0.7rem;
   color: #ffffff;
   margin-bottom: 0.8rem;
   font-weight: 600;
 }
 
 .carrinho-item p {
-  font-size: 1rem;
-  color: #898989;
+  font-size: 0.7rem; /* Reduz o tamanho do texto */
+  color: #f3f3f3;
+  line-height: 1.4; /* Melhora a leitura em texto menor */
   margin-bottom: 1rem;
+  overflow-y: auto; /* Adiciona rolagem vertical, se necessário */
+  max-height: 8rem; /* Limita a altura da área de texto */
+  padding-right: 5px; /* Espaço para barra de rolagem */
+  scrollbar-width: thin; /* Estiliza barra de rolagem para navegadores modernos */
+  scrollbar-color: #6e6e6e transparent;
 }
 
 .carrinho-item button {
-  padding: 0.6rem 1.2rem; /* Tamanho reduzido dos botões */
+  padding: 0.6rem 1.2rem;
   font-size: 0.95rem;
   color: #ffffff;
   background-color: #4050ff;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  margin-top: 10px; /* Espaço entre o botão e o conteúdo acima */
+  margin-top: 10px;
   transition: background-color 0.3s ease-in-out, transform 0.3s ease;
 }
 
