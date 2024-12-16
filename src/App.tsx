@@ -104,10 +104,9 @@ function ProdutosCadastrados() {
           <ul>
             <li><a href="#home">Home</a></li>
             <li><a href="#produtos">Produtos</a></li>
-            <li><a href="#sobre">Sobre</a></li>
-            <li><a href="#contato">Contato</a></li>
-            <li><a href="/cadastro-carrinho">Carrinho</a></li>
             <Link to="/cadastro-produto">Cadastro de Produto</Link>
+            <li><a href="/cadastro-carrinho">Carrinho</a></li>
+            
           </ul>
         </nav>
 
