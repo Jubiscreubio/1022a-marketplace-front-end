@@ -17,8 +17,9 @@ function CadastroProduto() {
   const [descricao, setDescricao] = useState("");
   const [preco, setPreco] = useState("");
   const [imagem, setImagem] = useState("");
+  const [imagemPreview, setImagemPreview] = useState<string>("");
 
-  // Função para adicionar o produto ao carrinho
+  // Função que adiciona o produto ao carrinho
   function addToCart(product: Produto) {
     const cart = JSON.parse(localStorage.getItem("cart") || "[]");
     cart.push(product);
@@ -89,9 +90,13 @@ function CadastroProduto() {
   function handlePreco(event: ChangeEvent<HTMLInputElement>) {
     setPreco(event.target.value);
   }
-  
+
   function handleImagem(event: ChangeEvent<HTMLInputElement>) {
-    setImagem(event.target.value);
+    const imageUrl = event.target.value;
+    setImagem(imageUrl);
+
+    // Atualiza a pré-visualização da imagem quando a URL é inserida
+    setImagemPreview(imageUrl);
   }
 
   return (
@@ -148,6 +153,24 @@ function CadastroProduto() {
             onChange={handleImagem}
           />
         </div>
+
+        {/* Exibindo a pré-visualização da imagem, se a URL estiver preenchida */}
+        {imagemPreview && (
+          <div style={{ marginTop: "10px" }}>
+            <img
+              src={imagemPreview}
+              alt="Pré-visualização"
+              style={{
+                width: "200px",
+                height: "auto",
+                borderRadius: "5px",
+                objectFit: "cover",
+                border: "1px solid #ccc",
+              }}
+            />
+          </div>
+        )}
+
         <input type="submit" value="Cadastrar" />
       </form>
     </>

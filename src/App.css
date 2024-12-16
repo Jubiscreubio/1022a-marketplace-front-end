@@ -71,11 +71,12 @@ body {
 .titulo-produto {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #333;
+  color: #ffffff;
   text-align: center;
   margin: 2rem 0;
   text-transform: uppercase;
   letter-spacing: 1px;
+  
 }
 
 /* Containers */
@@ -84,7 +85,7 @@ body {
   margin: 1.5rem;
   width: 90%;
   max-width: 1200px;
-  background-color: #fff;
+  background-color: #192638;
   border-radius: 10px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
@@ -97,9 +98,9 @@ body {
 }
 
 .produto-item {
-  background-color: #fff;
-  border: 1px solid #eee;
-  border-radius: 10px;
+  background-color: #2f2f2f;
+  border: 1px solid #33527d;
+  border-radius: 2px;
   padding: 1.5rem;
   width: 280px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -112,7 +113,7 @@ body {
 
 .produto-item:hover {
   transform: scale(1.05);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 20px rgba(123, 0, 255);
 }
 
 .container-imagem {
@@ -130,7 +131,7 @@ body {
 
 .produto-nome {
   font-size: 1.5rem;
-  color: #333;
+  color: #ffffff;
   margin: 0.5rem 0;
   font-weight: bold;
 }
@@ -138,20 +139,20 @@ body {
 .produto-preco {
   font-size: 1.3rem;
   font-weight: bold;
-  color: #007b00;
+  color: #00af00;
   margin-bottom: 1rem;
 }
 
 .produto-descricao {
   font-size: 1rem;
-  color: #666;
+  color: #949494;
   margin-bottom: 1rem;
   line-height: 1.4;
 }
 
 .botao-comprar {
   padding: 0.8rem;
-  background-color: #007bff ;
+  background-color: #4050ff ;
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -161,7 +162,7 @@ body {
 }
 
 .botao-comprar:hover {
-  background-color: #002f61;
+  background-color: #2733b6;
   transform: translateY(-2px);
 }
 
@@ -170,7 +171,7 @@ body {
   display: inline-block;
   margin: 1rem auto;
   padding: 0.8rem 1.2rem;
-  background-color: #007bff;
+  background-color: #4050ff;
   color: #fff;
   font-size: 1rem;
   font-weight: bold;
@@ -204,67 +205,82 @@ body {
 
 
 
- /* Estilos gerais para o formulário */
-form {
-  width: 300px;
-  margin: 0 auto;
+
+/* CSS Cadastrar Produto*/
+
+/* Container geral */
+.container {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Ocupa toda a altura da tela */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f4f4f4; /* Cor de fundo clara */
+  overflow: hidden;
+}
+
+/* Container para o conteúdo do formulário */
+.form-container {
+  background-color: white; /* Fundo branco para o formulário */
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-}
-
-/* Estilos para cada categoria */
-.categoria-sopro {
-  background-color: #ffcc00; /* Cor amarela para Sopro */
-  color: #333;
-  border: 2px solid #ff9900;
-}
-
-.categoria-corda {
-  background-color: #0099cc; /* Cor azul para Corda */
-  color: white;
-  border: 2px solid #006699;
-}
-
-.categoria-percussao {
-  background-color: #ff4d4d; /* Cor vermelha para Percussão */
-  color: white;
-  border: 2px solid #b30000;
-}
-
-/* Estilos para o campo select */
-select {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
   width: 100%;
-  padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 14px;
+  max-width: 500px; /* Largura máxima do formulário */
+  text-align: center;
 }
 
-/* Estilos para o botão de envio */
-input[type="submit"] {
-  background-color: #4CAF50; /* Cor verde */
-  color: white;
+/* Título */
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+/* Estilo dos campos de entrada */
+input {
+  width: 100%;
   padding: 10px;
-  border: none;
+  margin: 10px 0;
+  border: 1px solid #ccc;
   border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Foco nos campos de entrada */
+input:focus {
+  outline: none;
+  border-color: #4050ff;
+}
+
+/* Estilo do botão de envio */
+input[type="submit"] {
+  background-color: #4050ff;
+  color: white;
+  border: none;
   cursor: pointer;
-  width: 100%;
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-top: 20px;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease;
 }
 
 input[type="submit"]:hover {
-  background-color: #45a049; /* Tom mais escuro quando passa o mouse */
+  background-color: #2733b6;
+  transform: translateY(-3px);
 }
 
-/* Estilos para os inputs de texto */
-input[type="text"] {
-  width: 100%;
-  padding: 8px;
-  margin: 10px 0;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+/* Estilo de placeholders nos campos de entrada */
+input::placeholder {
+  color: #888;
+  font-style: italic;
 }
+
+
+
+
 
 
 
