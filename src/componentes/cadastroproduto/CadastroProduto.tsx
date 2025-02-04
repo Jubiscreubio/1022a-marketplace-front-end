@@ -1,34 +1,40 @@
 import { ChangeEvent, FormEvent, useState } from "react"
 import { useNavigate } from 'react-router-dom';
 
+
 function CadastroProduto() {
     const navigate = useNavigate();
     const [id, setId] = useState("");
-    const [nome, setNome] = useState("");
-    const [descricao, setDescricao] = useState("");
-    const [preco, setPreco] = useState("");
-    const [imagem, setImagem] = useState("");
+    const [titulo, setTitulo] = useState("");
+    const [detalhes, setDetalhes] = useState("");
+    const [valor, setValor] = useState("");
+    const [foto, setFoto] = useState("");
+    const [categoria, setCategoria] = useState("");
+    const [estoque, setEstoque] = useState("");
 
     async function handleForm(event: FormEvent) {
         event.preventDefault();
 
-        // Validação de campos obrigatórios
-        if (!id || !nome || !descricao || !preco || !imagem) {
+        if (!id || !titulo || !detalhes || !valor || !foto || !categoria || !estoque) {
             alert("Todos os campos precisam ser preenchidos.");
             return;
         }
 
-        // Validação de preço
-        const precoNumber = parseFloat(preco);
-        if (isNaN(precoNumber)) {
-            alert("Preço inválido.");
+        const valorNumber = parseFloat(valor);
+        if (isNaN(valorNumber)) {
+            alert("Valor inválido.");
             return;
         }
 
-        // Validação de URL de imagem (opcional, dependendo do formato que você quer aceitar)
-        const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-        if (!urlRegex.test(imagem)) {
-            alert("URL da imagem é inválida.");
+        const estoqueNumber = parseInt(estoque);
+        if (isNaN(estoqueNumber)) {
+            alert("Estoque inválido.");
+            return;
+        }
+
+        const urlRegex = /^(ftp|http|https):\/\/[^ "']+$/;
+        if (!urlRegex.test(foto)) {
+            alert("URL da foto é inválida.");
             return;
         }
 
@@ -39,15 +45,16 @@ function CadastroProduto() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    id: id,
-                    nome: nome,
-                    descricao: descricao,
-                    preco: precoNumber, // Envia o valor numérico do preço
-                    imagem: imagem,
+                    codigo: id,
+                    titulo: titulo,
+                    detalhes: detalhes,
+                    valor: valorNumber,
+                    foto: foto,
+                    categoria: categoria,
+                    estoque: estoqueNumber
                 }),
             });
 
-            // Verifica se a resposta foi bem-sucedida
             if (resposta.ok) {
                 alert("Produto Cadastrado com Sucesso");
                 navigate("/");
@@ -60,21 +67,26 @@ function CadastroProduto() {
         }
     }
 
-    // Handlers de input
-    function handleId(event: ChangeEvent<HTMLInputElement>) {
+    function handleCodigo(event: ChangeEvent<HTMLInputElement>) {
         setId(event.target.value);
     }
-    function handleNome(event: ChangeEvent<HTMLInputElement>) {
-        setNome(event.target.value);
+    function handleTitulo(event: ChangeEvent<HTMLInputElement>) {
+        setTitulo(event.target.value);
     }
-    function handleDescricao(event: ChangeEvent<HTMLInputElement>) {
-        setDescricao(event.target.value);
+    function handleDetalhes(event: ChangeEvent<HTMLInputElement>) {
+        setDetalhes(event.target.value);
     }
-    function handlePreco(event: ChangeEvent<HTMLInputElement>) {
-        setPreco(event.target.value);
+    function handleValor(event: ChangeEvent<HTMLInputElement>) {
+        setValor(event.target.value);
     }
-    function handleImagem(event: ChangeEvent<HTMLInputElement>) {
-        setImagem(event.target.value);
+    function handleFoto(event: ChangeEvent<HTMLInputElement>) {
+        setFoto(event.target.value);
+    }
+    function handleCategoria(event: ChangeEvent<HTMLInputElement>) {
+        setCategoria(event.target.value);
+    }
+    function handleEstoque(event: ChangeEvent<HTMLInputElement>) {
+        setEstoque(event.target.value);
     }
 
     return (
@@ -82,19 +94,25 @@ function CadastroProduto() {
             <h1>Meu Componente de Cadastro de Produtos</h1>
             <form onSubmit={handleForm}>
                 <div>
-                    <input placeholder="Id" type="text" name="id" id="id" onChange={handleId} />
+                    <input placeholder="Código" type="text" name="codigo" id="codigo" onChange={handleCodigo} />
                 </div>
                 <div>
-                    <input placeholder="Nome" type="text" name="nome" id="nome" onChange={handleNome} />
+                    <input placeholder="Título" type="text" name="titulo" id="titulo" onChange={handleTitulo} />
                 </div>
                 <div>
-                    <input placeholder="Descrição" type="text" name="descricao" id="descricao" onChange={handleDescricao} />
+                    <input placeholder="Detalhes" type="text" name="detalhes" id="detalhes" onChange={handleDetalhes} />
                 </div>
                 <div>
-                    <input placeholder="Preço" type="number" name="preco" id="preco" onChange={handlePreco} />
+                    <input placeholder="Valor" type="number" name="valor" id="valor" onChange={handleValor} />
                 </div>
                 <div>
-                    <input placeholder="URL Imagem" type="text" name="imagem" id="imagem" onChange={handleImagem} />
+                    <input placeholder="URL Foto" type="text" name="foto" id="foto" onChange={handleFoto} />
+                </div>
+                <div>
+                    <input placeholder="Categoria" type="text" name="categoria" id="categoria" onChange={handleCategoria} />
+                </div>
+                <div>
+                    <input placeholder="Estoque" type="number" name="estoque" id="estoque" onChange={handleEstoque} />
                 </div>
                 <input type="submit" value="Cadastrar" />
             </form>
