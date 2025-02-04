@@ -39,7 +39,7 @@ function CadastroProduto() {
         }
 
         try {
-            const resposta = await fetch("http://localhost:8000/produtos", {
+            const resposta = await fetch("https://one022a-marketplace.onrender.com/produtos", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
