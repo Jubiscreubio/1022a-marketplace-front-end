@@ -1,10 +1,10 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { ChangeEvent, FormEvent, useState, useEffect } from "react";
+import { FormEvent, useState, useEffect } from "react";
 
 function AlterarProduto() {
     const { id } = useParams();
     const navigate = useNavigate();
-    
+
     const [titulo, setTitulo] = useState("");
     const [detalhes, setDetalhes] = useState("");
     const [valor, setValor] = useState("");
@@ -14,21 +14,29 @@ function AlterarProduto() {
 
     useEffect(() => {
         async function fetchProduto() {
+            if (!id) return; // Se id for undefined, não faz a requisição
+
             try {
                 const resposta = await fetch(`https://one022a-marketplace.onrender.com/produtos/${id}`);
                 if (!resposta.ok) throw new Error("Erro ao buscar o produto");
+
                 const dados = await resposta.json();
-                setTitulo(dados.titulo);
-                setDetalhes(dados.detalhes);
-                setValor(dados.valor);
-                setFoto(dados.foto);
-                setCategoria(dados.categoria);
-                setEstoque(dados.estoque);
+
+                if (dados) {
+                    setTitulo(dados.titulo || "");
+                    setDetalhes(dados.detalhes || "");
+                    setValor(dados.valor ? String(dados.valor) : "");
+                    setFoto(dados.foto || "");
+                    setCategoria(dados.categoria || "");
+                    setEstoque(dados.estoque ? String(dados.estoque) : "");
+                }
             } catch (error) {
-                alert("Erro ao carregar o produto: " + error.message);
+                console.error("Erro ao carregar o produto:", error);
+                alert("Erro ao carregar o produto.");
             }
         }
-        if (id) fetchProduto();
+
+        fetchProduto();
     }, [id]);
 
     async function handleForm(event: FormEvent) {
@@ -72,7 +80,7 @@ function AlterarProduto() {
                     estoque: estoqueNumber
                 })
             });
-            
+
             if (resposta.ok) {
                 alert("Produto Alterado com Sucesso");
                 navigate("/");
