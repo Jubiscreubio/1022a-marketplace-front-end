@@ -5,6 +5,7 @@ function AlterarProduto() {
     const { id } = useParams();
     const navigate = useNavigate();
 
+    const [codigo, setCodigo] = useState("");
     const [titulo, setTitulo] = useState("");
     const [detalhes, setDetalhes] = useState("");
     const [valor, setValor] = useState("");
@@ -23,6 +24,7 @@ function AlterarProduto() {
                 const dados = await resposta.json();
 
                 if (dados) {
+                    setCodigo(dados.codigo || "");
                     setTitulo(dados.titulo || "");
                     setDetalhes(dados.detalhes || "");
                     setValor(dados.valor ? String(dados.valor) : "");
@@ -97,6 +99,9 @@ function AlterarProduto() {
         <>
             <h1>Alterar Produto</h1>
             <form onSubmit={handleForm}>
+            <div>
+                    <input placeholder="Codigo" type="text" value={codigo} onChange={(e) => setCodigo(e.target.value)} />
+                </div>
                 <div>
                     <input placeholder="Título" type="text" value={titulo} onChange={(e) => setTitulo(e.target.value)} />
                 </div>
@@ -123,8 +128,5 @@ function AlterarProduto() {
     );
 }
 
-<<<<<<< HEAD
 export default AlterarProduto;
-=======
-export default AlterarProduto;
->>>>>>> 266d08c75ba206584ffe549d09f8c0df848ce699
+

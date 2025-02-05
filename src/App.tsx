@@ -1,52 +1,43 @@
-import { useEffect, useState } from 'react'
-import './App.css'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react';
+import './App.css';
+import { Link } from 'react-router-dom';
 
 // Tipo para produtos
 type ProdutoType = {
-  id: number,
-<<<<<<< HEAD
-  titulo: string,
-  detalhe: string,
-  valor: string,
-  foto: string,
-  categoria: string,
-  estoque: string
-}
-=======
-  titulo:string,
-  detalhe:string,
-  valor:string,
-  foto:string,
-  categoria:string,
-  estoque:string
-  }
->>>>>>> 266d08c75ba206584ffe549d09f8c0df848ce699
+  id: number;
+  titulo: string;
+  detalhe: string;
+  valor: string;
+  foto: string;
+  categoria: string;
+  estoque: string;
+};
 
 function App() {
-  const [produtos, setProdutos] = useState<ProdutoType[]>([])
+  const [produtos, setProdutos] = useState<ProdutoType[]>([]);
 
-  // useEffect para carregar produtos e usuários
+  // useEffect para carregar produtos
   useEffect(() => {
-    // Buscar os produtos
-    fetch("https://one022a-marketplace.onrender.com/produtos")
-      .then(resposta => resposta.json())
-      .then(dados => setProdutos(dados))
-  }, [])
+    fetch('https://one022a-marketplace.onrender.com/produtos')
+      .then((resposta) => resposta.json())
+      .then((dados) => setProdutos(dados));
+  }, []);
 
   function handleExcluir(id: number) {
-    alert(`Excluir o produto com id ${id}`)
+    if (!window.confirm(`Deseja realmente excluir o produto com id ${id}?`)) return;
+    
     fetch(`https://one022a-marketplace.onrender.com/produtos/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
     })
-      .then(resposta => {
-        if (resposta.status === 200) {
-          alert("Produto excluído com sucesso")
-          window.location.reload()
+      .then((resposta) => {
+        if (resposta.ok) {
+          alert('Produto excluído com sucesso');
+          setProdutos(produtos.filter((produto) => produto.id !== id));
         } else {
-          alert("Erro ao excluir o produto: Confira o terminal do backend")
+          alert('Erro ao excluir o produto: Confira o terminal do backend');
         }
       })
+      .catch(() => alert('Erro ao excluir o produto'));
   }
 
   return (
@@ -60,42 +51,36 @@ function App() {
 
       {/* Link de Cadastro de Produto */}
       <div className="cadastro-produto-container">
-        <Link to="/cadastro-produto" className="cadastro-link">Cadastro de Produto</Link>
+        <Link to="/cadastro-produto" className="cadastro-link">
+          Cadastro de Produto
+        </Link>
       </div>
 
       {/* Listagem de Produtos */}
       <div className="produtos-container">
-        <h1 className='titulo-produto'>Produtos</h1>
+        <h1 className="titulo-produto">Produtos</h1>
         <div className="produtos-list">
-          {
-            produtos.map(produto => (
-              <div key={produto.id} className="produto-item">
-                <h3 className="produto-nome">{produto.titulo}</h3>
-                <div className='container-imagem'>
-<<<<<<< HEAD
-                  <img 
-                    src={produto.foto.startsWith('http') ? produto.foto : `https://one022a-marketplace.onrender.com/${produto.foto}`} 
-                    alt={produto.titulo} 
-                    onError={(e) => e.currentTarget.src = "/imagem-padrao.png"} 
-                  />
-                </div>
-                <p className="produto-preco">{produto.valor}</p>
-=======
-                  <img src={produto.foto} alt="Imagem do produto" />
-                </div>
-                <p className="produto-preco">{produto.titulo}</p>
->>>>>>> 266d08c75ba206584ffe549d09f8c0df848ce699
-                <p className="produto-descricao">{produto.detalhe}</p>
-                <button className="botao-comprar">Comprar</button>
-                <button onClick={() => handleExcluir(produto.id)}>Excluir</button>
-                <Link to={`/alterar-produto/${produto.id}`}>Alterar</Link>
+          {produtos.map((produto) => (
+            <div key={produto.id} className="produto-item">
+              <h3 className="produto-nome">{produto.titulo}</h3>
+              <div className="container-imagem">
+                <img
+                  src={produto.foto.startsWith('http') ? produto.foto : `https://one022a-marketplace.onrender.com/${produto.foto}`}
+                  alt={produto.titulo}
+                  onError={(e) => (e.currentTarget.src = '/imagem-padrao.png')}
+                />
               </div>
-            ))
-          }
+              <p className="produto-preco">R$ {produto.valor}</p>
+              <p className="produto-descricao">{produto.detalhe}</p>
+              <button className="botao-comprar">Comprar</button>
+              <button onClick={() => handleExcluir(produto.id)}>Excluir</button>
+              <Link to={`/alterar-produto/${produto.id}`}>Alterar</Link>
+            </div>
+          ))}
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
