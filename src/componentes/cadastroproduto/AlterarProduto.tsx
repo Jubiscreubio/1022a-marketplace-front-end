@@ -1,118 +1,95 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect, FormEvent } from "react";
-
-function EditarProduto() {
-    const { id } = useParams();
-    const navigate = useNavigate();
-
-    const [produto, setProduto] = useState({
-        titulo: "",
-        detalhes: "",
-        valor: "",
-        foto: "",
-        categoria: "",
-        estoque: ""
-    });
-
-    useEffect(() => {
-        async function fetchProduto() {
-            if (!id) return;
-            try {
-                const resposta = await fetch(`https://one022a-marketplace.onrender.com/produtos/${id}`);
-                if (!resposta.ok) throw new Error("Erro ao buscar o produto");
-                
-                const dados = await resposta.json();
-                setProduto({
-                    titulo: dados.titulo || "",
-                    detalhes: dados.detalhes || "",
-                    valor: dados.valor ? String(dados.valor) : "",
-                    foto: dados.foto || "",
-                    categoria: dados.categoria || "",
-                    estoque: dados.estoque ? String(dados.estoque) : ""
-                });
-            } catch (error) {
-                console.error("Erro ao carregar o produto:", error);
-                alert("Erro ao carregar o produto.");
-            }
-        }
-        fetchProduto();
-    }, [id]);
-
-    function handleChange(event) {
-        const { name, value } = event.target;
-        setProduto(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    }
-
-    async function handleSubmit(event: FormEvent) {
-        event.preventDefault();
-
-        const { titulo, detalhes, valor, foto, categoria, estoque } = produto;
-        if (!titulo || !detalhes || !valor || !foto || !categoria || !estoque) {
-            alert("Todos os campos precisam ser preenchidos.");
-            return;
-        }
-
-        const valorNumber = parseFloat(valor);
-        if (isNaN(valorNumber)) {
-            alert("Valor inválido.");
-            return;
-        }
-
-        const estoqueNumber = parseInt(estoque);
-        if (isNaN(estoqueNumber)) {
-            alert("Estoque inválido.");
-            return;
-        }
-
-        const urlRegex = /^(ftp|http|https):\/\/[^ "']+$/;
-        if (!urlRegex.test(foto)) {
-            alert("URL da foto é inválida.");
-            return;
-        }
-
-        try {
-            const resposta = await fetch(`https://one022a-marketplace.onrender.com/produtos/${id}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    titulo,
-                    detalhes,
-                    valor: valorNumber,
-                    foto,
-                    categoria,
-                    estoque: estoqueNumber
+import { useParams } from "react-router-dom";
+import { ChangeEvent, FormEvent, useState , useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
+function AlterarProduto(){
+    const { id } = useParams()
+    useEffect(()=>{
+        fetch(`https://one022a-marketplace.onrender.com/produtos/${id}`)
+        .then(resposta=>resposta.json())
+        .then(dados=>{
+            setNome(dados.nome)
+            setDescricao(dados.descricao)
+            setPreco(dados.preco)
+            setImagem(dados.imagem) 
+        })
+    },[])
+    const navigate = useNavigate()                
+    const [nome,setNome] = useState("")
+    const [descricao,setDescricao] = useState("")
+    const [preco,setPreco] = useState("")
+    const [imagem,setImagem] = useState("")
+    async function handleForm(event:FormEvent){
+        event.preventDefault()
+        try{
+            const resposta = await fetch(`https://one022a-marketplace.onrender.com/produtos/${id}`,{
+                method:"PUT",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({
+                    nome:nome,
+                    descricao:descricao,
+                    preco:preco,
+                    imagem:imagem
                 })
-            });
-
-            if (resposta.ok) {
-                alert("Produto alterado com sucesso");
-                navigate("/");
-            } else {
-                const mensagem = await resposta.text();
-                alert("Erro ao alterar produto - Error: " + mensagem);
+            })
+            if(resposta.status!=500){
+                alert("Produto Alterado com Sucesso")
+                navigate("/")
             }
-        } catch (error) {
-            alert("Erro ao conectar com o servidor.");
+            else{
+                const mensagem = await resposta.text()
+                alert("Erro ao Alterar Produto - Error: "+mensagem)
+            }
         }
+        catch(e){
+            alert("Servidor não está respondendo.")
+        }
+        
     }
-
-    return (
+    function handleNome(event:ChangeEvent<HTMLInputElement>){
+        setNome(event.target.value)
+    }
+    function handleDescricao(event:ChangeEvent<HTMLInputElement>){
+        setDescricao(event.target.value)
+    }
+    function handlePreco(event:ChangeEvent<HTMLInputElement>){
+        setPreco(event.target.value)
+    }
+    function handleImagem(event:ChangeEvent<HTMLInputElement>){
+        setImagem(event.target.value)
+    }
+    return(
         <>
-            <h1>Editar Produto</h1>
-            <form onSubmit={handleSubmit}>
-                <input name="titulo" placeholder="Título" type="text" value={produto.titulo} onChange={handleChange} />
-                <input name="detalhes" placeholder="Detalhes" type="text" value={produto.detalhes} onChange={handleChange} />
-                <input name="valor" placeholder="Valor" type="number" value={produto.valor} onChange={handleChange} />
-                <input name="foto" placeholder="URL Foto" type="text" value={produto.foto} onChange={handleChange} />
-                <input name="categoria" placeholder="Categoria" type="text" value={produto.categoria} onChange={handleChange} />
-                <input name="estoque" placeholder="Estoque" type="number" value={produto.estoque} onChange={handleChange} />
-                <button type="submit">Salvar Alterações</button>
+            <h1>Alterar</h1>
+            <form onSubmit={handleForm}>
+                <div>
+                    <label htmlFor="id">Id</label>
+                    <input placeholder="Id" type="text" name="id" id="id" value={id} readOnly/>
+                </div>
+                <div>
+                    <label htmlFor="nome">Nome</label>
+                    <input placeholder="Nome" type="text" name="nome" id="nome" value={nome} onChange={handleNome} />
+                </div>
+                <div>
+                    <label htmlFor="descricao">Descrição</label>
+                    <input placeholder="Descrição" type="text" name="descricao" id="descricao" value={descricao} onChange={handleDescricao} />
+                </div>
+                <div>
+                    <label htmlFor="preco">Preço</label>
+                    <input placeholder="Preço" type="text" name="preco" id="preco" value={preco} onChange={handlePreco} />
+                </div>
+                <div>
+                    <label htmlFor="imagem">URL Imagem</label>
+                    <input placeholder="URL Imagem" type="text" name="imagem" id="imagem" value={imagem} onChange={handleImagem} />
+                    {imagem && <img className="imagem-produto-reduzida" src={imagem} alt="Imagem do Produto" />}
+                </div>
+                <div>
+                    <input type="submit" value="Alterar" />
+                </div>
             </form>
         </>
-    );
+    )
 }
 
-export default EditarProduto;
+export default AlterarProduto;
