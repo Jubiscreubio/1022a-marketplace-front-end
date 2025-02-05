@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 // Tipo para produtos
 type ProdutoType = {
   id: number,
+<<<<<<< HEAD
   titulo: string,
   detalhe: string,
   valor: string,
@@ -12,6 +13,15 @@ type ProdutoType = {
   categoria: string,
   estoque: string
 }
+=======
+  titulo:string,
+  detalhe:string,
+  valor:string,
+  foto:string,
+  categoria:string,
+  estoque:string
+  }
+>>>>>>> 266d08c75ba206584ffe549d09f8c0df848ce699
 
 function App() {
   const [produtos, setProdutos] = useState<ProdutoType[]>([])
@@ -62,6 +72,7 @@ function App() {
               <div key={produto.id} className="produto-item">
                 <h3 className="produto-nome">{produto.titulo}</h3>
                 <div className='container-imagem'>
+<<<<<<< HEAD
                   <img 
                     src={produto.foto.startsWith('http') ? produto.foto : `https://one022a-marketplace.onrender.com/${produto.foto}`} 
                     alt={produto.titulo} 
@@ -69,6 +80,11 @@ function App() {
                   />
                 </div>
                 <p className="produto-preco">{produto.valor}</p>
+=======
+                  <img src={produto.foto} alt="Imagem do produto" />
+                </div>
+                <p className="produto-preco">{produto.titulo}</p>
+>>>>>>> 266d08c75ba206584ffe549d09f8c0df848ce699
                 <p className="produto-descricao">{produto.detalhe}</p>
                 <button className="botao-comprar">Comprar</button>
                 <button onClick={() => handleExcluir(produto.id)}>Excluir</button>
