@@ -123,4 +123,8 @@ function AlterarProduto() {
     );
 }
 
+<<<<<<< HEAD
 export default AlterarProduto;
+=======
+export default AlterarProduto;
+>>>>>>> 266d08c75ba206584ffe549d09f8c0df848ce699
