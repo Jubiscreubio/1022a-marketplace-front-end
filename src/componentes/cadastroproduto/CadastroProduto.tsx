@@ -1,100 +1,79 @@
-import { ChangeEvent, FormEvent, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { FormEvent, useState, ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
 
-function CadastroProduto() {
+export default function CadastroProduto() {
     const navigate = useNavigate();
-    const [id, setId] = useState("");
-    const [nome, setNome] = useState("");
-    const [descricao, setDescricao] = useState("");
-    const [preco, setPreco] = useState("");
-    const [imagem, setImagem] = useState("");
-    const [categoria, setCategoria] = useState("");
-    const [estoque, setEstoque] = useState("");
+    const [id, setId] = useState("")
+    const [descricao, setDescricao] = useState("")
+    const [nome, setNome] = useState("")
+    const [imagem, setImagem] = useState("")
 
-    async function handleForm(event: FormEvent) {
+    function handleForm(event: FormEvent) {
         event.preventDefault();
-
-        if (!id || !nome || !descricao || !preco || !imagem || !categoria || !estoque) {
-            alert("Todos os campos precisam ser preenchidos.");
-            return;
+        console.log("Tentei cadastrar produtos");
+        const produto = {
+            id: id,
+            nome: nome,
+            descricao: descricao,
+            imagem: imagem
         }
-
-        const precoNumber = parseFloat(preco);
-        if (isNaN(precoNumber)) {
-            alert("Preço inválido.");
-            return;
-        }
-
-        const estoqueNumber = parseInt(estoque);
-        if (isNaN(estoqueNumber) || estoqueNumber < 0) {
-            alert("Estoque inválido.");
-            return;
-        }
-
-        const urlRegex = /^(ftp|http|https):\/\/[^ "']+$/;
-        if (!urlRegex.test(imagem)) {
-            alert("URL da imagem é inválida.");
-            return;
-        }
-
-        try {
-            const resposta = await fetch("https://one022a-marketplace.onrender.com/produtos", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    id,
-                    nome,
-                    descricao,
-                    preco: precoNumber,
-                    imagem,
-                    categoria,
-                    estoque: estoqueNumber,
-                }),
-            });
-
-            if (resposta.ok) {
-                alert("Produto Cadastrado com Sucesso");
-                navigate("/");
-            } else {
-                const mensagem = await resposta.text();
-                alert("Erro ao Cadastrar Produto - Error: " + mensagem);
+        fetch("https://one022a-marketplace-yvb4.onrender.com/produtos", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(produto)
+        }).then(response => {
+            if (response.status === 200) {
+                alert("´Produto cadastrado com sucesso")
+                navigate("/")
             }
-        } catch (e) {
-            alert("Servidor não está respondendo.");
-        }
+            else {
+                alert("Erro ao cadastrar produto")
+            }
+        })
+    }
+    function handleId(event: ChangeEvent<HTMLInputElement>) {
+        setId(event.target.value)
+    }
+    function handleDescricao(event: ChangeEvent<HTMLInputElement>) {
+        setDescricao(event.target.value)
+    }
+    function handleNome(event: ChangeEvent<HTMLInputElement>) {
+        setNome(event.target.value)
+    }
+    function handleImagem(event: ChangeEvent<HTMLInputElement>) {
+        setImagem(event.target.value)
     }
 
     return (
         <>
-            <h1>Cadastro de Produtos</h1>
-            <form onSubmit={handleForm}>
-                <div>
-                    <input placeholder="Id" type="text" onChange={(e) => setId(e.target.value)} />
-                </div>
-                <div>
-                    <input placeholder="Nome" type="text" onChange={(e) => setNome(e.target.value)} />
-                </div>
-                <div>
-                    <input placeholder="Descrição" type="text" onChange={(e) => setDescricao(e.target.value)} />
-                </div>
-                <div>
-                    <input placeholder="Preço" type="number" onChange={(e) => setPreco(e.target.value)} />
-                </div>
-                <div>
-                    <input placeholder="URL da Imagem" type="text" onChange={(e) => setImagem(e.target.value)} />
-                </div>
-                <div>
-                    <input placeholder="Categoria" type="text" onChange={(e) => setCategoria(e.target.value)} />
-                </div>
-                <div>
-                    <input placeholder="Estoque" type="number" onChange={(e) => setEstoque(e.target.value)} />
-                </div>
-                <input type="submit" value="Cadastrar" />
-            </form>
-        </>
-    );
-}
+            <main className="container">
+                <h1>Tela Cadastro Produtos</h1>
+                <form onSubmit={handleForm}>
+                    <div>
+                        <label htmlFor="id">ID</label>
+                        <input type="text" name="id" onChange={handleId} />
+                    </div>
+                    <div>
+                        <label htmlFor="nome">Nome</label>
+                        <input type="text" name="nome" onChange={handleNome} />
+                    </div>
+                    <div>
+                        <label htmlFor="descricao">Descricao</label>
+                        <input type="text" name="descricao" onChange={handleDescricao} />
+                    </div>
+                    <div>
+                        <label htmlFor="imagem">Imagem</label>
+                        <input type="text" name="imagem" onChange={handleImagem} />
+                        {imagem && <img className="imagem-previa-upload" src={imagem} />}
+                    </div>
+                    <div>
+                        <input type="submit" value="Cadastrar" />
+                    </div>
+                </form>
+            </main>
 
-export default CadastroProduto;
+        </>
+    )
+}
