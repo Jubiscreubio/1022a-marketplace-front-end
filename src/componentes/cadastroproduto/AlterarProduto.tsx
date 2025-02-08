@@ -1,70 +1,32 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { FormEvent, useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { ChangeEvent, FormEvent, useState , useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 
-function AlterarProduto() {
+function AlterarProduto(){
     const { id } = useParams();
     const navigate = useNavigate();
-
-    const [titulo, setTitulo] = useState("");
-    const [detalhes, setDetalhes] = useState("");
-    const [valor, setValor] = useState("");
-    const [foto, setFoto] = useState("");
+    const [nome, setNome] = useState("");
+    const [descricao, setDescricao] = useState("");
+    const [preco, setPreco] = useState("");
+    const [imagem, setImagem] = useState("");
     const [categoria, setCategoria] = useState("");
     const [estoque, setEstoque] = useState("");
 
     useEffect(() => {
-        async function fetchProduto() {
-            if (!id) return; // Se id for undefined, não faz a requisição
-
-            try {
-                const resposta = await fetch(`https://one022a-marketplace.onrender.com/produtos/${id}`);
-                if (!resposta.ok) throw new Error("Erro ao buscar o produto");
-
-                const dados = await resposta.json();
-
-                if (dados) {
-                    setTitulo(dados.titulo || "");
-                    setDetalhes(dados.detalhes || "");
-                    setValor(dados.valor ? String(dados.valor) : "");
-                    setFoto(dados.foto || "");
-                    setCategoria(dados.categoria || "");
-                    setEstoque(dados.estoque ? String(dados.estoque) : "");
-                }
-            } catch (error) {
-                console.error("Erro ao carregar o produto:", error);
-                alert("Erro ao carregar o produto.");
-            }
-        }
-
-        fetchProduto();
+        fetch(`https://one022a-marketplace.onrender.com/produtos/${id}`)
+        .then(resposta => resposta.json())
+        .then(dados => {
+            setNome(dados.nome);
+            setDescricao(dados.descricao);
+            setPreco(dados.preco);
+            setImagem(dados.imagem);
+            setCategoria(dados.categoria);
+            setEstoque(dados.estoque);
+        });
     }, [id]);
 
-    async function handleForm(event: FormEvent) {
+    async function handleForm(event: FormEvent){
         event.preventDefault();
-
-        if (!titulo || !detalhes || !valor || !foto || !categoria || !estoque) {
-            alert("Todos os campos precisam ser preenchidos.");
-            return;
-        }
-
-        const valorNumber = parseFloat(valor);
-        if (isNaN(valorNumber)) {
-            alert("Valor inválido.");
-            return;
-        }
-
-        const estoqueNumber = parseInt(estoque);
-        if (isNaN(estoqueNumber)) {
-            alert("Estoque inválido.");
-            return;
-        }
-
-        const urlRegex = /^(ftp|http|https):\/\/[^ "']+$/;
-        if (!urlRegex.test(foto)) {
-            alert("URL da foto é inválida.");
-            return;
-        }
-
         try {
             const resposta = await fetch(`https://one022a-marketplace.onrender.com/produtos/${id}`, {
                 method: "PUT",
@@ -72,16 +34,15 @@ function AlterarProduto() {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    titulo,
-                    detalhes,
-                    valor: valorNumber,
-                    foto,
+                    nome,
+                    descricao,
+                    preco,
+                    imagem,
                     categoria,
-                    estoque: estoqueNumber
+                    estoque
                 })
             });
-
-            if (resposta.ok) {
+            if (resposta.status !== 500) {
                 alert("Produto Alterado com Sucesso");
                 navigate("/");
             } else {
@@ -98,22 +59,33 @@ function AlterarProduto() {
             <h1>Alterar Produto</h1>
             <form onSubmit={handleForm}>
                 <div>
-                    <input placeholder="Título" type="text" value={titulo} onChange={(e) => setTitulo(e.target.value)} />
+                    <label htmlFor="id">Id</label>
+                    <input placeholder="Id" type="text" name="id" id="id" value={id} readOnly />
                 </div>
                 <div>
-                    <input placeholder="Detalhes" type="text" value={detalhes} onChange={(e) => setDetalhes(e.target.value)} />
+                    <label htmlFor="nome">Nome</label>
+                    <input placeholder="Nome" type="text" name="nome" id="nome" value={nome} onChange={(e) => setNome(e.target.value)} />
                 </div>
                 <div>
-                    <input placeholder="Valor" type="number" value={valor} onChange={(e) => setValor(e.target.value)} />
+                    <label htmlFor="descricao">Descrição</label>
+                    <input placeholder="Descrição" type="text" name="descricao" id="descricao" value={descricao} onChange={(e) => setDescricao(e.target.value)} />
                 </div>
                 <div>
-                    <input placeholder="URL Foto" type="text" value={foto} onChange={(e) => setFoto(e.target.value)} />
+                    <label htmlFor="preco">Preço</label>
+                    <input placeholder="Preço" type="text" name="preco" id="preco" value={preco} onChange={(e) => setPreco(e.target.value)} />
                 </div>
                 <div>
-                    <input placeholder="Categoria" type="text" value={categoria} onChange={(e) => setCategoria(e.target.value)} />
+                    <label htmlFor="imagem">URL Imagem</label>
+                    <input placeholder="URL Imagem" type="text" name="imagem" id="imagem" value={imagem} onChange={(e) => setImagem(e.target.value)} />
+                    {imagem && <img className="imagem-produto-reduzida" src={imagem} alt="Imagem do Produto" />}
                 </div>
                 <div>
-                    <input placeholder="Estoque" type="number" value={estoque} onChange={(e) => setEstoque(e.target.value)} />
+                    <label htmlFor="categoria">Categoria</label>
+                    <input placeholder="Categoria" type="text" name="categoria" id="categoria" value={categoria} onChange={(e) => setCategoria(e.target.value)} />
+                </div>
+                <div>
+                    <label htmlFor="estoque">Estoque</label>
+                    <input placeholder="Estoque" type="number" name="estoque" id="estoque" value={estoque} onChange={(e) => setEstoque(e.target.value)} />
                 </div>
                 <div>
                     <input type="submit" value="Alterar" />
@@ -123,8 +95,4 @@ function AlterarProduto() {
     );
 }
 
-<<<<<<< HEAD
 export default AlterarProduto;
-=======
-export default AlterarProduto;
->>>>>>> 266d08c75ba206584ffe549d09f8c0df848ce699
