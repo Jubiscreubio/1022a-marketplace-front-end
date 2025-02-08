@@ -24,14 +24,17 @@ export default function CadastroProduto() {
             },
             body: JSON.stringify(produto)
         }).then(response => {
-            if (response.status === 200) {
-                alert("´Produto cadastrado com sucesso")
-                navigate("/")
+            if (response.ok) {  // Usando response.ok que é mais claro
+                alert("Produto cadastrado com sucesso");
+                navigate("/");  // Redireciona após o cadastro com sucesso
+            } else {
+                response.text().then(errorMessage => {
+                    alert(`Erro ao cadastrar produto: ${errorMessage}`);  // Exibe uma mensagem de erro detalhada
+                });
             }
-            else {
-                alert("Erro ao cadastrar produto")
-            }
-        })
+        }).catch(error => {
+            alert(`Erro ao comunicar com o servidor: ${error.message}`);  // Tratar erros de rede ou de comunicação
+        });
     }
     function handleId(event: ChangeEvent<HTMLInputElement>) {
         setId(event.target.value)
@@ -66,6 +69,7 @@ export default function CadastroProduto() {
                     <div>
                         <label htmlFor="imagem">Imagem</label>
                         <input type="text" name="imagem" onChange={handleImagem} />
+                        {imagem && <img className="imagem-previa-upload" src={imagem} />}
                     </div>
                     <div>
                         <input type="submit" value="Cadastrar" />

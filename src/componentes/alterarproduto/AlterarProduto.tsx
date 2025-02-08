@@ -10,7 +10,7 @@ function AlterarProduto() {
     const [nome, setNome] = useState("");
     const [imagem, setImagem] = useState("");
     const [genero, setGenero] = useState("");
-    const [tipoInstrumento, setTipoInstrumento] = useState("");
+    const [tipoInstrumento, setTipoInstrumento] = useState("Livre");
 
     useEffect(() => {
         fetch(`https://one022a-marketplace.onrender.com/produtos/${id}`)
@@ -20,7 +20,7 @@ function AlterarProduto() {
                 setNome(dados.nome);
                 setImagem(dados.imagem);
                 setGenero(dados.genero || "");
-                setTipoInstrumento(dados.tipoInstrumento || "");
+                setTipoInstrumento(dados.tipoInstrumento);
             });
     }, [id]);
 
@@ -69,25 +69,13 @@ function AlterarProduto() {
                         <input type="text" name="imagem" value={imagem} onChange={(e) => setImagem(e.target.value)} />
                         {imagem && <img className="imagem-previa-upload" src={imagem} alt="Prévia da imagem" />}
                     </div>
+                   
                     <div>
-                        <label htmlFor="genero">Gênero</label>
-                        <select name="genero" value={genero} onChange={(e) => setGenero(e.target.value)}>
-                            <option value="">Selecione um gênero</option>
-                            <option value="Cordas">Cordas</option>
-                            <option value="Percussão">Percussão</option>
-                            <option value="Sopro">Sopro</option>
-                            <option value="Teclas">Teclas</option>
-                            <option value="Eletrônico">Eletrônico</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label htmlFor="tipoInstrumento">Tipo de Instrumento</label>
+                        <label htmlFor="tipoInstrumento">Tipo do Instrumento</label>
                         <select name="tipoInstrumento" value={tipoInstrumento} onChange={(e) => setTipoInstrumento(e.target.value)}>
-                            <option value="Violão">Violão</option>
-                            <option value="Guitarra">Guitarra</option>
-                            <option value="Bateria">Bateria</option>
-                            <option value="Teclado">Teclado</option>
-                            <option value="Saxofone">Saxofone</option>
+                            <option value="sopro">Sopro</option>
+                            <option value="percucao">Percução</option>
+                            <option value="corda">Corda</option>
                         </select>
                     </div>
                     <div>
