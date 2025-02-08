@@ -17,7 +17,7 @@ export default function CadastroProduto() {
             descricao: descricao,
             imagem: imagem
         }
-        fetch("https://one022a-marketplace-yvb4.onrender.com/produtos", {
+        fetch("https://one022a-marketplace.onrender.com/produtos", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -66,7 +66,6 @@ export default function CadastroProduto() {
                     <div>
                         <label htmlFor="imagem">Imagem</label>
                         <input type="text" name="imagem" onChange={handleImagem} />
-                        {imagem && <img className="imagem-previa-upload" src={imagem} />}
                     </div>
                     <div>
                         <input type="submit" value="Cadastrar" />

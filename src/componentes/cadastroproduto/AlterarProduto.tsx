@@ -10,17 +10,17 @@ function AlterarProduto() {
     const [nome, setNome] = useState("");
     const [imagem, setImagem] = useState("");
     const [genero, setGenero] = useState("");
-    const [idadeMinima, setIdadeMinima] = useState("Livre");
+    const [tipoInstrumento, setTipoInstrumento] = useState("");
 
     useEffect(() => {
-        fetch(`https://one022a-marketplace-yvb4.onrender.com/produtos/${id}`)
+        fetch(`https://one022a-marketplace.onrender.com/produtos/${id}`)
             .then(resposta => resposta.json())
             .then(dados => {
                 setDescricao(dados.descricao);
                 setNome(dados.nome);
                 setImagem(dados.imagem);
                 setGenero(dados.genero || "");
-                setIdadeMinima(dados.idadeMinima || "Livre");
+                setTipoInstrumento(dados.tipoInstrumento || "");
             });
     }, [id]);
 
@@ -32,10 +32,10 @@ function AlterarProduto() {
             descricao,
             imagem,
             genero,
-            idadeMinima
+            tipoInstrumento
         };
 
-        fetch(`https://one022a-marketplace-yvb4.onrender.com/produtos/${id}`, {
+        fetch(`https://one022a-marketplace.onrender.com/produtos/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -73,19 +73,21 @@ function AlterarProduto() {
                         <label htmlFor="genero">Gênero</label>
                         <select name="genero" value={genero} onChange={(e) => setGenero(e.target.value)}>
                             <option value="">Selecione um gênero</option>
-                            <option value="Shonen">Shonen</option>
-                            <option value="Shojo">Shojo</option>
-                            <option value="Seinen">Seinen</option>
-                            <option value="Josei">Josei</option>
-                            <option value="Isekai">Isekai</option>
-                            <option value="Slice of Life">Slice of Life</option>
+                            <option value="Cordas">Cordas</option>
+                            <option value="Percussão">Percussão</option>
+                            <option value="Sopro">Sopro</option>
+                            <option value="Teclas">Teclas</option>
+                            <option value="Eletrônico">Eletrônico</option>
                         </select>
                     </div>
                     <div>
-                        <label htmlFor="idadeMinima">Idade Mínima</label>
-                        <select name="idadeMinima" value={idadeMinima} onChange={(e) => setIdadeMinima(e.target.value)}>
-                            <option value="Livre">Livre</option>
-                            <option value="Adulto">Adulto</option>
+                        <label htmlFor="tipoInstrumento">Tipo de Instrumento</label>
+                        <select name="tipoInstrumento" value={tipoInstrumento} onChange={(e) => setTipoInstrumento(e.target.value)}>
+                            <option value="Violão">Violão</option>
+                            <option value="Guitarra">Guitarra</option>
+                            <option value="Bateria">Bateria</option>
+                            <option value="Teclado">Teclado</option>
+                            <option value="Saxofone">Saxofone</option>
                         </select>
                     </div>
                     <div>
